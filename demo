@@ -1,0 +1,7 @@
+#!/bin/bash
+out_dir=bin
+cp="$out_dir"
+for jar in "lib/"*.jar; do
+    cp="$cp:$jar"
+done
+exec java -classpath "$cp" "com/aibang/open/client/demo/JavaDemo" "$@"
