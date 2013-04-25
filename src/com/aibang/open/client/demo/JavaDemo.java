@@ -84,7 +84,7 @@ public class JavaDemo {
 		System.out.println("post_comment: ");
 		System.out.println("    ./demo post_comment <bid> <score> <content>");
 		try {
-			jsonString = search("西安", "东大街");
+			jsonString = search("西安", "东大街"); 
 			showResult(jsonString);
 			try {
 				jsonObject = new JSONObject(jsonString);
@@ -93,8 +93,8 @@ public class JavaDemo {
 				JSONObject jsonObject2 = new JSONObject(jsonObject.getString("bizs"));
 				//System.out.println(jsonObject2.get)
 		    	JSONArray array = jsonObject2.getJSONArray("biz");
-		    	
-	           System.out.println(array);
+		    	System.out.println(array);
+		    	System.out.println(place.JsonToPlaceList(array).get(0).toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -142,5 +142,5 @@ public class JavaDemo {
 
 	private AibangApi aibang;
 	// 这里请使用您自己申请的API KEY
-	private static final String API_KEY = "f41c8afccc586de03a99c86097e98ccb";
+	private static final String API_KEY = "212d00fbd2799ead7c6be51b067598f2";
 }
