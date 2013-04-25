@@ -26,10 +26,11 @@ import org.json.JSONObject;
 public class JavaDemo {
 	private String jsonString;
 	private JSONObject jsonObject;
-
+	private int place_num;
 	public static void main(String[] args) throws AibangException {
 		JavaDemo demo = new JavaDemo();
-		if (args.length == 0) {
+		demo.printUsage();
+	/*	if (args.length == 0) {
 			demo.printUsage();
 			return;
 		}
@@ -37,7 +38,7 @@ public class JavaDemo {
 		for (int i = 1; i < args.length; i++) {
 			real_args[i - 1] = args[i];
 		}
-		demo.run(args[0], real_args);
+		demo.run(args[0], real_args);*/
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class JavaDemo {
 	 * 显示使用说明.
 	 */
 	private void printUsage() {
-		System.out.println("Usage:");
+	/*	System.out.println("Usage:");
 		System.out.println("search: ");
 		System.out.println("    ./demo search <city> <addr>");
 		System.out.println("biz: ");
@@ -82,12 +83,18 @@ public class JavaDemo {
 		System.out.println("bus: ");
 		System.out.println("    ./demo bus <city> <start> <end>");
 		System.out.println("post_comment: ");
-		System.out.println("    ./demo post_comment <bid> <score> <content>");
+		System.out.println("    ./demo post_comment <bid> <score> <content>"); */
 		try {
 			jsonString = search("西安", "东大街"); 
+			JSONObject jsonObject_temp = new JSONObject(jsonString);
+			place_num = jsonObject_temp.getInt("total");
+			do {
+				
+			} while (jsonObject_temp.getInt("result_num")>0);
 			showResult(jsonString);
 			try {
 				jsonObject = new JSONObject(jsonString);
+				place_num = jsonObject.getInt("total");
 			//	System.out.println(jsonObject);
 				System.out.println(jsonObject.getString("bizs"));
 				JSONObject jsonObject2 = new JSONObject(jsonObject.getString("bizs"));
@@ -103,6 +110,9 @@ public class JavaDemo {
 		} catch (AibangException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
@@ -110,7 +120,10 @@ public class JavaDemo {
 		return aibang.search(city, addr, null, null, null, null, null, null,
 				null, null);
 	}
-
+	private String search(String city, String addr,int from,int to) throws AibangException {
+		return aibang.search(city, addr, null, null, null, null, null, null,
+				from, to);
+	}
 	private String biz(String bid) throws AibangException {
 		return aibang.biz(bid);
 	}
