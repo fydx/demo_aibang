@@ -90,8 +90,11 @@ public class JavaDemo {
 				jsonObject = new JSONObject(jsonString);
 			//	System.out.println(jsonObject);
 				System.out.println(jsonObject.getString("bizs"));
-		    	JSONArray array = jsonObject.getJSONArray("bizs");
-	            System.out.println(array);
+				JSONObject jsonObject2 = new JSONObject(jsonObject.getString("bizs"));
+				//System.out.println(jsonObject2.get)
+		    	JSONArray array = jsonObject2.getJSONArray("biz");
+		    	
+	           System.out.println(array);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
