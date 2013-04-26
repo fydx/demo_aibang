@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.aibang.open.client.exception.AibangException;
+
 public class place {
 	private String img_url;
 	private String id;
@@ -126,6 +128,7 @@ public class place {
 		return places;
 		
 	}
+	//一个jsonobject返回一个place对象
 	public static place JsonobTOPlace(JSONObject jsonObject) throws JSONException
 	{
 		place temp_place = new place();
@@ -143,9 +146,35 @@ public class place {
 		temp_place.setTel(jsonObject.getString("tel"));
 		return temp_place;
 	}
-	public static List<place> jsonStringToList() {
-		
-		return null;
+	public static List<place> jsonStringToList(String city,String addr) throws JSONException, AibangException {
+		int from,result_num;
+		from = 0;
+		int count = 0 ;
+		List<place> places = new  ArrayList<place>();
+		List<place> places_temp = new ArrayList<place>();
+	//	JSONObject jsonObject = new JSONObject(jsonString);
+	//	int place_num = jsonObject.getInt("total");
+		JavaDemo javaDemo = new JavaDemo();
+	  for(;;)
+	  {
+		  count++;
+		  //  String jsonString2 = javaDemo.search("西安", "东大街", from);
+		  JSONObject jsonObject_temp1 = new JSONObject(javaDemo.search(city, addr, from));
+		  result_num = jsonObject_temp1.getInt("result_num");
+		 
+		  if (result_num <=0||count>8) {
+			break;
+		}
+		  String jsonString_bizs= jsonObject_temp1.getString("bizs");
+		  JSONObject jsonObject_temp2 = new JSONObject(jsonString_bizs);
+		  JSONArray array = jsonObject_temp2.getJSONArray("biz");
+		  places_temp= JsonToPlaceList(array);
+		  for (int i = 0; i < places_temp.size(); i++) {
+			places.add(places_temp.get(i));
+		}
+		  from+=9;
+	  }
+		return places;
 		
 	}
 }
