@@ -1,5 +1,10 @@
 package com.aibang.open.client.demo;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
 
 import com.aibang.open.client.AibangApi;
@@ -29,6 +34,7 @@ public class JavaDemo {
 /*	private String jsonString;
 	private JSONObject jsonObject;
 	private int place_num;*/
+	private List<place> places;
 	public static void main(String[] args) throws AibangException {
 		JavaDemo demo = new JavaDemo();
 		demo.printUsage();
@@ -78,8 +84,9 @@ public class JavaDemo {
 	 */
 	private void printUsage() {
 		try {
-			List<place> places = place.jsonStringToList("西安", "东大街");
+			places = place.jsonStringToList("西安", "东大街");
 			System.out.println(places.get(0).toString());
+			server_on();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,7 +172,48 @@ public class JavaDemo {
 	private void showResult(String result) {
 		System.out.println(result);
 	}
-
+	
+	private void server_on()
+	{
+		try {
+			ServerSocket server = null;
+			try {
+				server = new ServerSocket(4700);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("Error" + e);
+			}
+			Socket socket = null;
+			try {
+				socket = server.accept();
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("Error2");
+			}
+			String line;
+			BufferedReader is = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
+			PrintWriter os = new PrintWriter(socket.getOutputStream());
+			BufferedReader sin = new BufferedReader(new InputStreamReader(
+					System.in));
+			System.out.println("Client:" + is.readLine());
+			line = sin.readLine();
+			while (!line.equals("bye")) {
+				os.println(line);
+				os.flush();
+				System.out.println("Server" + line);
+				System.out.println("Client:" + is.readLine());
+				line = sin.readLine();
+			}
+			os.close();
+			is.close();
+			socket.close();
+			server.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error3");
+		}
+	}
 	private AibangApi aibang;
 	// 这里请使用您自己申请的API KEY
 	private static final String API_KEY = "212d00fbd2799ead7c6be51b067598f2";

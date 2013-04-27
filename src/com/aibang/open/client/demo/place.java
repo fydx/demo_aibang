@@ -8,20 +8,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.aibang.open.client.exception.AibangException;
-
+//地点类
 public class place {
-	private String img_url;
-	private String id;
-	private String desc;
-	private String cate;
-	private String tel;
-	private String name;
-	private String addr;
-	private double rate;
-	private double pos_x;
-	private double pos_y;
-	private int cost;
-	private int dist;
+	private String img_url; //图片url
+	private String id;   //id
+	private String desc;  //描述
+	private String cate;	//类别
+	private String tel;	//电话
+	private String name;	//名字
+	private String addr;//地址
+	private double rate;//评分，会有小数点后面一位
+	private double pos_x;	//纬度 30多的那个
+	private double pos_y;   //经度 108左右的那个
+	private int cost;     //花费
+	private int dist;	//位置偏移
 	//getters and setters
 	public double getRate() {
 		return rate;
@@ -146,6 +146,7 @@ public class place {
 		temp_place.setTel(jsonObject.getString("tel"));
 		return temp_place;
 	}
+	//传入一个城市和地址，返回附近地点，保存在list中
 	public static List<place> jsonStringToList(String city,String addr) throws JSONException, AibangException {
 		int from,result_num;
 		from = 0;
@@ -162,7 +163,7 @@ public class place {
 		  JSONObject jsonObject_temp1 = new JSONObject(javaDemo.search(city, addr, from));
 		  result_num = jsonObject_temp1.getInt("result_num");
 		 
-		  if (result_num <=0||count>8) {
+		  if (result_num <=0||count>2) {
 			break;
 		}
 		  String jsonString_bizs= jsonObject_temp1.getString("bizs");
