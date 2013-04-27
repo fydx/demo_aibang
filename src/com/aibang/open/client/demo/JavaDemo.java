@@ -26,9 +26,9 @@ import org.json.JSONObject;
  * </pre>
  */
 public class JavaDemo {
-	private String jsonString;
+/*	private String jsonString;
 	private JSONObject jsonObject;
-	private int place_num;
+	private int place_num;*/
 	public static void main(String[] args) throws AibangException {
 		JavaDemo demo = new JavaDemo();
 		demo.printUsage();
@@ -74,7 +74,7 @@ public class JavaDemo {
 	}
 
 	/**
-	 * 显示使用说明.
+	 * 测试部分
 	 */
 	private void printUsage() {
 		try {
