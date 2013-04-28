@@ -85,7 +85,6 @@ public class JavaDemo {
 		try {
 			places = place.jsonStringToList("西安", "东大街");
 			System.out.println(places.get(0).toString());
-		
 			server_on();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -117,8 +116,9 @@ public class JavaDemo {
 		 * System.out.println(jsonObject);
 		 * System.out.println(jsonObject.getString("bizs")); JSONObject
 		 * jsonObject2 = new JSONObject(jsonObject.getString("bizs"));
-		 * //System.out.println(jsonObject2.get) JSONArray array =
-		 * jsonObject2.getJSONArray("biz"); System.out.println(array);
+		 * //System.out.println(jsonObject2.get) 
+		 * JSONArray array =jsonObject2.getJSONArray("biz"); 
+		 * System.out.println(array);
 		 * System.out.println(place.JsonToPlaceList(array).get(0).toString()); }
 		 * catch (JSONException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); }
