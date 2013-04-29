@@ -148,8 +148,7 @@ public class JavaDemo {
 
 	private void server_on() {
 		String line=null;
-		System.out.println("**********************************");
-		System.out.println("**********************************");
+		
 		try {
 			ServerSocket server = null;
 			try {
@@ -195,6 +194,6 @@ public class JavaDemo {
 
 	
 	private AibangApi aibang;
-	// 这里请使用您自己申请的API KEY
+	// 这里请使用自己申请的API KEY
 	private static final String API_KEY = "212d00fbd2799ead7c6be51b067598f2";
 }
