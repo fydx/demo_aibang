@@ -116,17 +116,17 @@ public class JavaDemo {
 		return aibang.search(city, addr, null, null, null, null, null, null,
 				from, null);
 	}
-
+	//查询商户详情页，传入参与为商铺id（bid），返回json string
 	private String biz(String bid) throws AibangException {
 		return aibang.biz(bid);
 	}
-
+    //查询公交
 	private String bus(String city, String start, String end)
 			throws AibangException {
 		return aibang.bus(city, start, end, null, null, null, null, null, null,
 				null);
 	}
-
+	//提交评论
 	private String postComment(String bid, String score, String content)
 			throws AibangException {
 		Integer int_score = 5;
