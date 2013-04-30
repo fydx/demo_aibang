@@ -17,18 +17,7 @@ import org.json.JSONObject;
 /**
  * 一个简单的使用aibang java版本开放sdk的demo.
  * 
- * <pre>
- * 使用方法: 
- * 
- * 搜索某个地点的商户:
- *  ./demo search <city> <addr> 
- * 查询商户详情页:
- *  ./demo biz <bid>
- * 查询公交:
- *  ./demo bus <city> <start> <end> 
- * 发表点评：  
- *  ./demo post_comment <bid> <score> <content>
- * </pre>
+
  */
 public class JavaDemo {
 	/*
@@ -55,28 +44,7 @@ public class JavaDemo {
 		aibang = new AibangApi(API_KEY);
 	}
 
-	/**
-	 * 解析命令并调用对应模块执行.
-	 * 
-	 * @param command
-	 * @param args
-	 * @throws AibangException
-	 */
-	public void run(String command, String[] args) throws AibangException {
-		if ("search".equals(command) && args.length == 2) {
-			showResult(search(args[0], args[1]));
-			return;
-		} else if ("biz".equals(command) && args.length == 1) {
-			showResult(biz(args[0]));
-			return;
-		} else if ("bus".equals(command) && args.length == 3) {
-			showResult(bus(args[0], args[1], args[2]));
-		} else if ("post_comment".equals(command) && args.length == 3) {
-			showResult(postComment(args[0], args[1], args[2]));
-		}
-		System.out.println("Unknown command or parameters: " + command);
-		printUsage();
-	}
+	
 
 	/**
 	 * 测试部分
@@ -225,72 +193,7 @@ public class JavaDemo {
 		
 	}
 
-	private String loadConvert(String theString) {
-		char aChar;
-		int len = theString.length();
-		StringBuffer outBuffer = new StringBuffer(len);
-
-		for (int x = 0; x < len;) {
-			aChar = theString.charAt(x++);
-			if (aChar == '\\') {
-				aChar = theString.charAt(x++);
-				if (aChar == 'u') {
-					// Read the xxxx
-					int value = 0;
-					for (int i = 0; i < 4; i++) {
-						aChar = theString.charAt(x++);
-						switch (aChar) {
-						case '0':
-						case '1':
-						case '2':
-						case '3':
-						case '4':
-						case '5':
-						case '6':
-						case '7':
-						case '8':
-						case '9':
-							value = (value << 4) + aChar - '0';
-							break;
-						case 'a':
-						case 'b':
-						case 'c':
-						case 'd':
-						case 'e':
-						case 'f':
-							value = (value << 4) + 10 + aChar - 'a';
-							break;
-						case 'A':
-						case 'B':
-						case 'C':
-						case 'D':
-						case 'E':
-						case 'F':
-							value = (value << 4) + 10 + aChar - 'A';
-							break;
-						default:
-							throw new IllegalArgumentException(
-									"Malformed \\uxxxx encoding.");
-						}
-					}
-					outBuffer.append((char) value);
-				} else {
-					if (aChar == 't')
-						aChar = '\t';
-					else if (aChar == 'r')
-						aChar = '\r';
-					else if (aChar == 'n')
-						aChar = '\n';
-					else if (aChar == 'f')
-						aChar = '\f';
-					outBuffer.append(aChar);
-				}
-			} else
-				outBuffer.append(aChar);
-		}
-		return outBuffer.toString();
-	}
-
+	
 	private AibangApi aibang;
 	// 这里请使用您自己申请的API KEY
 	private static final String API_KEY = "212d00fbd2799ead7c6be51b067598f2";
