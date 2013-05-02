@@ -165,23 +165,23 @@ public class JavaDemo {
 				System.out.println("Error2");
 			}
 			
-			BufferedReader is = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
+		//	BufferedReader is = new BufferedReader(new InputStreamReader(
+		//			socket.getInputStream()));
 			PrintWriter os = new PrintWriter(socket.getOutputStream());
 			BufferedReader sin = new BufferedReader(new InputStreamReader(
 					System.in));
-			System.out.println("Client:" + is.readLine());
+		//	System.out.println("Client:" + is.readLine());
 		    line = new String(GetJsonBizsString());
 		    System.out.println(line); 
 		
 				os.println(line);
 				os.flush();
 				System.out.println("Server" + line);
-				System.out.println("Client:" + is.readLine());
+			//	System.out.println("Client:" + is.readLine());
 				line = sin.readLine();
 		
 			os.close();
-			is.close();
+		//	is.close();
 			socket.close();
 			server.close();
 		
