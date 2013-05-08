@@ -147,50 +147,40 @@ public class JavaDemo {
 	}
 
 	private void server_on() {
-		String line=null;
-		
-		try {
-			ServerSocket server = null;
-			try {
-				server = new ServerSocket(4700);
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("Error" + e);
-			}
-			Socket socket = null;
-			try {
-				socket = server.accept();
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("Error2");
-			}
-			
-		//	BufferedReader is = new BufferedReader(new InputStreamReader(
-		//			socket.getInputStream()));
-			PrintWriter os = new PrintWriter(socket.getOutputStream());
-			BufferedReader sin = new BufferedReader(new InputStreamReader(
-					System.in));
-		//	System.out.println("Client:" + is.readLine());
-		    line = new String(GetJsonBizsString());
-		    System.out.println(line); 
-		
-				os.println(line);
-				os.flush();
-				System.out.println("Server" + line);
-			//	System.out.println("Client:" + is.readLine());
-				line = sin.readLine();
-		
-			os.close();
-		//	is.close();
-			socket.close();
-			server.close();
-		
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Error3");
-		}
-		
-	}
+        String line=null;
+        
+        try {
+            ServerSocket server = null;
+            try {
+                //创建一个新的server并监听4700端口
+                server = new ServerSocket(4700);
+            } catch (Exception e) {
+                // TODO: handle exception
+                System.out.println("Error" + e);
+            }
+            Socket socket = null;
+            try {
+                socket = server.accept();
+            } catch (Exception e) {
+                // TODO: handle exception
+                System.out.println("Error2");
+            }   
+            PrintWriter os = new PrintWriter(socket.getOutputStream());
+            line = new String(GetJsonBizsString());
+            System.out.println(line); 
+                os.println(line);
+                os.flush();
+        
+            os.close();
+        
+            socket.close();
+            server.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Error3");
+        }
+        
+    }
 
 	
 	private AibangApi aibang;
