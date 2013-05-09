@@ -1,23 +1,17 @@
 package com.aibang.open.client.demo;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.aibang.open.client.AibangApi;
 import com.aibang.open.client.exception.AibangException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * 一个简单的使用aibang java版本开放sdk的demo.
  * 
-
  */
 public class JavaDemo {
 	/*
@@ -44,11 +38,10 @@ public class JavaDemo {
 		aibang = new AibangApi(API_KEY);
 	}
 
-	
-
 	/**
 	 * 测试部分
 	 */
+
 	private void printUsage() {
 		try {
 			places = place.jsonStringToList("西安", "东大街");
@@ -84,9 +77,8 @@ public class JavaDemo {
 		 * System.out.println(jsonObject);
 		 * System.out.println(jsonObject.getString("bizs")); JSONObject
 		 * jsonObject2 = new JSONObject(jsonObject.getString("bizs"));
-		 * //System.out.println(jsonObject2.get) 
-		 * JSONArray array =jsonObject2.getJSONArray("biz"); 
-		 * System.out.println(array);
+		 * //System.out.println(jsonObject2.get) JSONArray array
+		 * =jsonObject2.getJSONArray("biz"); System.out.println(array);
 		 * System.out.println(place.JsonToPlaceList(array).get(0).toString()); }
 		 * catch (JSONException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); }
@@ -99,7 +91,7 @@ public class JavaDemo {
 
 	// 得到地点jsonstring 下一步即将此发送到客户端，可以直接转化为jsonarray
 	// 这里暂时仅作为测试所用，发送jsonstring对于客户端解析起来比自己序列话要简单一些
-	private String GetJsonBizsString() throws JSONException, AibangException {
+	public String GetJsonBizsString() throws JSONException, AibangException {
 		String jsonString = search("西安", "西大街");
 		JSONObject jsonObject = new JSONObject(jsonString);
 		String jsonString_bizs = jsonObject.getString("bizs");
@@ -116,17 +108,20 @@ public class JavaDemo {
 		return aibang.search(city, addr, null, null, null, null, null, null,
 				from, null);
 	}
-	//查询商户详情页，传入参与为商铺id（bid），返回json string
+
+	// 查询商户详情页，传入参与为商铺id（bid），返回json string
 	private String biz(String bid) throws AibangException {
 		return aibang.biz(bid);
 	}
-    //查询公交
+
+	// 查询公交
 	private String bus(String city, String start, String end)
 			throws AibangException {
 		return aibang.bus(city, start, end, null, null, null, null, null, null,
 				null);
 	}
-	//提交评论
+
+	// 提交评论
 	private String postComment(String bid, String score, String content)
 			throws AibangException {
 		Integer int_score = 5;
@@ -146,43 +141,36 @@ public class JavaDemo {
 		System.out.println(result);
 	}
 
-	private void server_on() {
-        String line=null;
-        
-        try {
-            ServerSocket server = null;
-            try {
-                //创建一个新的server并监听4700端口
-                server = new ServerSocket(4700);
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println("Error" + e);
-            }
-            Socket socket = null;
-            try {
-                socket = server.accept();
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println("Error2");
-            }   
-            PrintWriter os = new PrintWriter(socket.getOutputStream());
-            line = new String(GetJsonBizsString());
-            System.out.println(line); 
-                os.println(line);
-                os.flush();
-        
-            os.close();
-        
-            socket.close();
-            server.close();
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("Error3");
-        }
-        
-    }
+	public void server_on() {
+		try
+		{
+			
+		int clientcount = 0; // 统计客户端总数
+
+		boolean listening = true; // 是否对客户端进行监听
+
+		ServerSocket server = null; // 服务器端Socket对象
+		try {
+			// 创建一个ServerSocket在端口4700监听客户请求
+			server = new ServerSocket(4700);
+			System.out.println("Server starts...");
+		} catch (Exception e) {
+			System.out.println("Can not listen to. " + e);
+		}
+		  while (listening) {
+		      // 客户端计数
+		      clientcount++;
+		      
+		      // 监听到客户请求,根据得到的Socket对象和客户计数创建服务线程,并启动之
+		      new ServerThread(server.accept(), clientcount).start();
+		     }
+		    } catch (Exception e) {
+		     System.out.println("Error. " + e);
+		    }
+	}
 
 	
+
 	private AibangApi aibang;
 	// 这里请使用自己申请的API KEY
 	private static final String API_KEY = "212d00fbd2799ead7c6be51b067598f2";
